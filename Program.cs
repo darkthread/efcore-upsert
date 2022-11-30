@@ -58,10 +58,9 @@ void Upsert(DailyRecord record) {
     if (exist == null) {
         dbCtx.Records.Add(record);
     } else {
-        exist.Date = record.Date;
-        exist.EventSummary = record.EventSummary;
-        exist.Remark = record.Remark;
-        exist.User = record.User;
+        //Id 為自動跳號，將待更新資料I Id 設成一致
+        //record.Id = exist.Id;
+        dbCtx.Entry(exist).CurrentValues.SetValues(record);
     }
     enableLog = true;
     dbCtx.SaveChanges();
